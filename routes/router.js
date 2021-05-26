@@ -157,6 +157,7 @@ router.delete('/api/register', (req, res, next) => {
     db.query('delete from webcalendar.user where name = ?'
         ,[req.body.name],(err,data)=>{
             if(!err){
+                console.log(data);
                 res.send(data);
             }
             //if(!err) res.send(data);
@@ -170,6 +171,21 @@ router.delete('/api/register', (req, res, next) => {
 router.post('/api/login', (req, res, next) => {
     db.query("select EXISTS (select * from webcalendar.manager where password= ? ) as success;",[req.body.password],(err,data)=>{
             if(!err){
+                res.send(data);
+            }
+            //if(!err) res.send(data);
+            else {
+                console.log("qr err: ");
+                res.send(err);
+            }
+        })
+});
+
+router.delete('/api/register/clear', (req, res, next) => {
+    db.query('delete from webcalendar.schedule where name = ?'
+        ,[req.body.name],(err,data)=>{
+            if(!err){
+                console.log(data);
                 res.send(data);
             }
             //if(!err) res.send(data);
