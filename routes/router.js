@@ -143,7 +143,20 @@ router.post('/api/register', (req, res, next) => {
     db.query('insert into webcalendar.user (name) values (?)'
         ,[req.body.name],(err,data)=>{
             if(!err){
-                console.log(req.body);
+                res.send(data);
+            }
+            //if(!err) res.send(data);
+            else {
+                console.log("qr err: ");
+                res.send(err);
+            }
+        })
+});
+
+router.delete('/api/register', (req, res, next) => {
+    db.query('delete from webcalendar.user where name = ?'
+        ,[req.body.name],(err,data)=>{
+            if(!err){
                 res.send(data);
             }
             //if(!err) res.send(data);
