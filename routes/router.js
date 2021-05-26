@@ -182,7 +182,7 @@ router.post('/api/login', (req, res, next) => {
 });
 
 router.delete('/api/register/clear', (req, res, next) => {
-    db.query('delete from webcalendar.schedule where name = ?'
+    db.query('delete from webcalendar.schedule where uname = ?'
         ,[req.body.name],(err,data)=>{
             if(!err){
                 console.log(data);
