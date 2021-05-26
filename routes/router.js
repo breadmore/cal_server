@@ -55,7 +55,7 @@ router.get('/api/getselect/:date', (req, res, next) => {
     })
 });
 
-router.post('/api', (req, res, next) => {
+router.post('/api/schedule', (req, res, next) => {
     db.query('insert into webcalendar.schedule (uname,taskdate,tasknum) values (?, ?, ?)'
         ,[req.body.uname,req.body.taskdate,req.body.tasknum],(err,data)=>{
         if(!err){
@@ -69,7 +69,7 @@ router.post('/api', (req, res, next) => {
     })
 });
 
-router.delete('/api', (req, res, next) => {
+router.delete('/api/schedule', (req, res, next) => {
     db.query('delete from webcalendar.schedule where uname = ? AND taskdate = ? AND tasknum = ?'
         ,[req.body.uname,req.body.taskdate,req.body.tasknum],(err,data)=>{
             if(!err){
@@ -137,5 +137,33 @@ router.get('/api/board', (req, res, next) => {
             res.send(err);
         }
     })
+});
+
+router.post('/api/register', (req, res, next) => {
+    db.query('insert into webcalendar.user (name) values (?)'
+        ,[req.body.name],(err,data)=>{
+            if(!err){
+                console.log(req.body);
+                res.send(data);
+            }
+            //if(!err) res.send(data);
+            else {
+                console.log("qr err: ");
+                res.send(err);
+            }
+        })
+});
+
+router.post('/api/login', (req, res, next) => {
+    db.query("select EXISTS (select * from webcalendar.manager where password= ? ) as success;",[req.body.password],(err,data)=>{
+            if(!err){
+                res.send(data);
+            }
+            //if(!err) res.send(data);
+            else {
+                console.log("qr err: ");
+                res.send(err);
+            }
+        })
 });
 module.exports = router;
